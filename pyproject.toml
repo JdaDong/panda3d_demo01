@@ -1,0 +1,56 @@
+# =============================================================================
+# panda3d_demo01 —— Panda3D 全 API 学习工程
+# -----------------------------------------------------------------------------
+# 采用 PEP 621 + setuptools（src 布局）。
+#   - 开发安装:   pip install -e ".[dev]"
+#   - 运行:       panda3d-demo01            (或 python -m panda3d_demo01)
+#   - 测试:       pytest                    (配置见 [tool.pytest.ini_options])
+#   - 打包成 App: python setup.py build_apps (Panda3D 官方部署工具，见 setup.py)
+# =============================================================================
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "panda3d_demo01"
+version = "0.1.0"
+description = "Learn Panda3D by touching (almost) every public API: 24 runnable lessons + UT."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "jiangdadong" }]
+dependencies = ["panda3d==1.10.16"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "pytest-cov>=5"]
+
+[project.scripts]
+panda3d-demo01 = "panda3d_demo01.__main__:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+panda3d_demo01 = ["assets/shaders/*.glsl", "assets/prc/*.prc"]
+
+# -----------------------------------------------------------------------------
+# pytest：所有测试共享一个 ShowBase（Panda3D 进程内只能有一个 ShowBase 实例）
+# -----------------------------------------------------------------------------
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+addopts = "-ra --strict-markers"
+markers = [
+    "window: 需要可渲染的窗口/离屏缓冲（无 GPU 环境会自动 skip）",
+    "e2e: 以子进程方式端到端跑完整 App（较慢）",
+]
+filterwarnings = ["ignore::DeprecationWarning"]
+
+[tool.coverage.run]
+source = ["panda3d_demo01"]
+branch = true
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = false
+exclude_lines = ["pragma: no cover", "if __name__ == .__main__.:", "raise NotImplementedError"]

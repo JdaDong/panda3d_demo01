@@ -1,0 +1,13 @@
+# 统一换行符：仓库内一律 LF（shell 脚本在 CRLF 下会直接报错）
+* text=auto eol=lf
+*.sh text eol=lf
+*.py text eol=lf
+*.glsl text eol=lf
+*.prc text eol=lf
+
+# 二进制资源
+*.png binary
+*.jpg binary
+*.wav binary
+*.bam binary
+*.whl binary
