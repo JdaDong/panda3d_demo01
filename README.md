@@ -141,6 +141,18 @@ scripts/build.sh bam     # 程序化生成 .egg → egg2bam → .bam
 scripts/build.sh app     # Panda3D build_apps 冻结为独立应用（需联网）
 ```
 
+### 验证状态
+
+| 功能 | 状态 | 说明 |
+|---|---|---|
+| 离屏运行 24 节课 + 截图 | ✅ 已实测 | macOS / M3 Pro |
+| headless 模式测试 | ✅ 已实测 | 157 passed / 13 skipped |
+| `build.sh check / wheel / bam` | ✅ 已实测 | 生成的 wheel 内含 GLSL 和 .prc 资源 |
+| 开窗交互（键鼠、HUD 中文） | ⚠️ 未自动化测试 | 离屏模式没有键鼠；输入逻辑通过 `messenger.send` 在 UT 中验证 |
+| `build.sh app`（build_apps） | ❌ 未实测 | 配置已写好，需要联网下载各平台 wheel |
+| Linux / Windows | ❌ 未实测 | 代码没有依赖平台特性，字体路径已预置候选 |
+| CI 流水线 | ❌ 未配置 | 可直接用 `scripts/test.sh headless` 作为 CI 命令 |
+
 ---
 
 ## 7. 环境说明
@@ -151,3 +163,18 @@ scripts/build.sh app     # Panda3D build_apps 冻结为独立应用（需联网�
 * 程序化资源（wav、bam、ptf、mf）写到 `$PANDA3D_DEMO01_CACHE`（默认系统临时目录下 `panda3d_demo01/`）。
 
 开发中踩过的 20 个坑整理在 [docs/PITFALLS.md](docs/PITFALLS.md)，强烈建议阅读。
+
+---
+
+## 8. 文档索引
+
+| 文档 | 内容 |
+|---|---|
+| [docs/LEARNING_PATH.md](docs/LEARNING_PATH.md) | 6 个阶段的学习顺序，每节课的要点和练习 |
+| [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | 模块关系、一帧的执行顺序、课程生命周期、渲染输出、测试架构（Mermaid） |
+| [docs/PITFALLS.md](docs/PITFALLS.md) | 20 条真实踩坑：现象 → 根因 → 解法 → 位置 |
+| [docs/API_COVERAGE.md](docs/API_COVERAGE.md) | 自动生成的 426 个 API 清单（按模块、按课程） |
+| [docs/ADDING_A_LESSON.md](docs/ADDING_A_LESSON.md) | 新增一节课的步骤和约定 |
+| [CHANGELOG.md](CHANGELOG.md) | 版本变更记录 |
+
+许可证：[MIT](LICENSE)。
